@@ -2,4 +2,7 @@
 *.aux
 *.toc
 *.swp
+*.log
+*.aux
+*.class
 

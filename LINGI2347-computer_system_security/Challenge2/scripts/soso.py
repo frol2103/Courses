@@ -28,8 +28,7 @@ gMaxRep = int(sys.argv[2])
 
 
 for i in range(gMaxRep):    
-    f = open("soso.py.log","w+")
-    f.write(str(i)+ "\n")
+    f = open("hex.py.log","w+"
     f.close()
     for c in allWords(alphabet,gLength):
         print(c*(i+1))

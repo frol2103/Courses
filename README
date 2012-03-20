@@ -1,3 +1,10 @@
 This git has for goal to help create collaborative summary or old exams answer,...
 
-Please use the scripts to create new course or new documents
+Please add course with the following format:
+CourseCode-CourseName
+with CourseCode in uppercase and CourseName without special characters or spaces 
+(ex : LINGI2347-computer_system_security)
+
+To add a document please create a new directory with the document name as directory name
+then make a symbolic link of eplDoc.cls and logo_ucl.jpg from EmptyDoc and copy the document.tex
+
