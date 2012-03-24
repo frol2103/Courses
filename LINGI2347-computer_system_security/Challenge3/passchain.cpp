@@ -51,3 +51,8 @@ unsigned int PassChain::nextIterFromHash(unsigned char hash[16], int position){
     }
     return np;
 }
+        
+bool PassChain::match(PassChain *chain)
+{
+    return chain->getEnd() == end;
+}
