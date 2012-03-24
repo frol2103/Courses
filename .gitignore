@@ -6,4 +6,4 @@
 *.aux
 *.class
 *.out
-
+*.o

@@ -4,6 +4,7 @@ OBJ= $(SRC:.cpp=.o)
 CC = g++
 all: $(EXEC)
 LDFLAGS = -lcrypto
+CFLAGS = -g
 
 hello: $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
