@@ -25,8 +25,11 @@ void testHashTable()
 void testHashTableInOut()
 {
     Md5Table mt = Md5Table(10);
+    
     mt.toFile("test.bin");
     mt.fromFile("test.bin");
+    mt.insert(new PassChain(123456789));
+    cout << mt.repr();
 }
 
 int main(int argc, const char *argv[])

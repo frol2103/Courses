@@ -22,6 +22,7 @@ void Md5Table::insert(PassChain* pc)
     {
         table[position] = new Md5ChainedList();
     }
+    cout << "inserted at " <<position <<endl;
     table[position]->insert(pc);
 }
 
@@ -48,6 +49,7 @@ void Md5Table::fromFile(string filePath)
             unsigned int start,end;
             file.read((char *)&start, sizeof(unsigned int));
             file.read((char *)&end, sizeof(unsigned int));
+            insert(new PassChain(start,end));
         }
         file.close();
 
@@ -61,13 +63,40 @@ void Md5Table::toFile(string filePath)
     ofstream file (filePath.c_str(), ios::out|ios::binary);
     if (file.is_open())
     {
-            unsigned int start=1230;
-            unsigned int end=12384;
-            file.write((char*)&start, sizeof(unsigned int));
-            file.write((char *)&end, sizeof(unsigned int));
-        file.close();
 
+       int i = 0;
+       for(i=0;i<capacity;i++)
+       {
+           if(table[i] != NULL)
+           {
+                Md5ChainedItem * elem;
+                elem = table[i]->getRoot();
+                while(elem != NULL)
+                {
+                    unsigned int start = elem->pc->getStart();
+                    unsigned int end = elem->pc->getEnd();
+                    file.write((char*)&start, sizeof(unsigned int));
+                    file.write((char *)&end, sizeof(unsigned int));
+                    elem = elem->next;
+                }
+           }
+       }
+       file.close();
     }
     else cout << "Unable to open file";
 
+}
+
+string Md5Table::repr()
+{
+    string repr = "";
+    int i = 0;
+    for(i=0;i<capacity;i++)
+    {
+       if(table[i] == NULL)
+            repr += "NULL \n";
+       else
+           repr += table[i]->repr() + "\n";
+    }
+    return repr;
 }

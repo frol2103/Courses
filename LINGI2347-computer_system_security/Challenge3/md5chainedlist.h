@@ -4,6 +4,8 @@
 
 #include "passchain.h"
 #include "stdlib.h"
+#include <string>
+using namespace std;
 
 typedef struct Md5ChainedItem Md5ChainedItem;
 
@@ -19,9 +21,11 @@ class Md5ChainedList
     
     public:
         Md5ChainedList() {size = 0; root = NULL;}
+        Md5ChainedItem* getRoot(){return root;}
         PassChain* getMatch(PassChain * ref);
         int getSize() {return size;}
         void insert(PassChain* pc);
+        string repr();
         
 };
 

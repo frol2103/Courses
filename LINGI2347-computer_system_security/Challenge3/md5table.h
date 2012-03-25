@@ -25,6 +25,6 @@ class Md5Table
         PassChain* getMatch(PassChain * ref);
         void fromFile(string filePath);
         void toFile(string filePath);
-
+        string repr();
 };
 #endif /* end of include guard: MD5TABLE */

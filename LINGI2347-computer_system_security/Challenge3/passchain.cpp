@@ -56,3 +56,10 @@ bool PassChain::match(PassChain *chain)
 {
     return chain->getEnd() == end;
 }
+
+string PassChain::repr()
+{
+    ostringstream oss;
+    oss << start << "->" << end;
+    return oss.str();
+}
