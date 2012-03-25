@@ -2,7 +2,6 @@
 
 void Md5Table::init(int capacity)
 {
-    cout << "init with capacity "<< capacity << endl;
 
     this->capacity = capacity;
     size = 0;
@@ -22,7 +21,6 @@ void Md5Table::insert(PassChain* pc)
     {
         table[position] = new Md5ChainedList();
     }
-    cout << "inserted at " <<position <<endl;
     table[position]->insert(pc);
 }
 

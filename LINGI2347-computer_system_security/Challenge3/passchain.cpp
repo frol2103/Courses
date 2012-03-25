@@ -26,7 +26,6 @@ PassChain::PassChain(unsigned int aStart, unsigned int aEnd)
 
 unsigned int PassChain::computeFrom(unsigned int pass, int place)
 {
-    cout << endl <<"compute chain " << pass ;
     int i;
     unsigned char hash[16];
     unsigned int p = pass;
@@ -34,9 +33,7 @@ unsigned int PassChain::computeFrom(unsigned int pass, int place)
     {
         md5i_iterate(p, 5, hash); 
         p = nextIterFromHash(hash,i);
-        cout << "<" << p ;
     }
-    cout << endl;
     end = p;
     return p;
 }

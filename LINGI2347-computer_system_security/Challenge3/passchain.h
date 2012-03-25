@@ -1,6 +1,6 @@
 #ifndef PASSCHAIN
 #define PASSCHAIN
-#define CHAIN_LENGTH 10
+#define CHAIN_LENGTH 1000
 #include <string>
 #include <sstream>
 using namespace std;
