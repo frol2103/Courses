@@ -29,21 +29,22 @@ unsigned int PassChain::computeFrom(unsigned int pass, int place)
     int i;
     unsigned char hash[16];
     unsigned int p = pass;
-    cout << p << endl;
+  //  cout << p << endl;
     for(i =place+1; i<CHAIN_LENGTH ;i++)
     {
         md5i_iterate(p, 5, hash); 
         p = nextIterFromHash(hash,i);
-        cout << p << endl;
+      //  print_hex(hash,16); 
+    //    cout << " : "<< p << endl;
     }
     end = p;
-    cout << endl;
+    //cout << endl;
     return p;
 }
 
 unsigned int PassChain::computeFrom(unsigned char* hash, int place)
 {
-    return computeFrom(nextIterFromHash(hash,place),place+1);
+    return computeFrom(nextIterFromHash(hash,place),place);
 }
 
 unsigned int PassChain::nextIterFromHash(unsigned char hash[16], int position){    

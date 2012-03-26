@@ -72,9 +72,15 @@ int main(int argc, const char *argv[])
     mt.fromFile(argv[2]);
     for(i=0;i<nbhashes; i++)
     {
+//        cout << "try to find ";
+//        print_hex(hashes[i],16);
+//        cout << endl;
         unsigned int p = findPass(hashes[i],&mt);
         print_hex(hashes[i],16);
-        cout << " : " << p<<endl;
+        if(p!= -1)
+            cout << " : " << p<<endl;
+        else
+            cout << " : not found" << endl;
 
     }
     return 0;
