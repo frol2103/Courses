@@ -15,13 +15,16 @@ void Md5Table::init(int capacity)
 
 void Md5Table::insert(PassChain* pc)
 {
-
+    if(getMatch(pc) != NULL)
+        //there is alredy a matching 
+        return;
     int position  = hash(pc);
     if(table[position] == NULL)
     {
         table[position] = new Md5ChainedList();
     }
     table[position]->insert(pc);
+    size++;
 }
 
 

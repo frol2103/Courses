@@ -2,14 +2,8 @@
 #include <stdlib.h> 
 #include <string.h> 
 #include <openssl/md5.h> 
+#include "util.h"
 
-
-void int32_to_char(int i, unsigned char * c)
-{
-    int j;
-    for(j =0; j<4; j++)
-        c[j] = (i>>(8*j))  & 0xff;
-}
 
 void md5_iterate(unsigned char * p, int plength, int niter, unsigned char* out)
 {

@@ -1,7 +1,7 @@
 #ifndef MD5TABLE
 
 #define MD5TABLE
-#define DEFAULT_SIZE 10000000
+#define DEFAULT_SIZE 50000000
 
 #include "passchain.h"
 #include "md5chainedlist.h"
@@ -26,5 +26,6 @@ class Md5Table
         void fromFile(string filePath);
         void toFile(string filePath);
         string repr();
+        int getSize(){return size;}
 };
 #endif /* end of include guard: MD5TABLE */

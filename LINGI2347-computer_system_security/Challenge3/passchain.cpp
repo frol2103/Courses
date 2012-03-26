@@ -29,15 +29,22 @@ unsigned int PassChain::computeFrom(unsigned int pass, int place)
     int i;
     unsigned char hash[16];
     unsigned int p = pass;
+    cout << p << endl;
     for(i =place+1; i<CHAIN_LENGTH ;i++)
     {
         md5i_iterate(p, 5, hash); 
         p = nextIterFromHash(hash,i);
+        cout << p << endl;
     }
     end = p;
+    cout << endl;
     return p;
 }
 
+unsigned int PassChain::computeFrom(unsigned char* hash, int place)
+{
+    return computeFrom(nextIterFromHash(hash,place),place+1);
+}
 
 unsigned int PassChain::nextIterFromHash(unsigned char hash[16], int position){    
     unsigned int np = 0;
@@ -59,4 +66,25 @@ string PassChain::repr()
     ostringstream oss;
     oss << start << "->" << end;
     return oss.str();
+}
+
+/**
+ * position is the position of the hash
+ */
+unsigned int PassChain::matchInPosition(unsigned char* ahash, int position)
+{
+    int i;
+    unsigned char hash[16];
+    unsigned int p = start;
+    for(i =1; i<=position;i++)
+    {   
+        md5i_iterate(p, 5, hash); 
+        if(i != position)
+            p = nextIterFromHash(hash,i);
+
+    }
+    if(hash_equal(hash,ahash))
+        return p;
+    else
+        return -1;
 }

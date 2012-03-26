@@ -32,11 +32,34 @@ void testHashTableInOut()
     cout << mt.repr();
 }
 
+void computeMd5()
+{
+    int i;
+    unsigned int pass[] = {2404660588,1978320671};
+    int lpass = 2;
+    unsigned char hash[16];
+    for(i = 0; i<lpass; i++)
+    {
+        cout << pass[i] << endl;
+    }
+    
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    
+    for(i = 0; i<lpass; i++)
+    {
+        md5i_iterate(pass[i],5,hash);
+        print_hex(hash,16);
+        cout << endl;
+    }
+}
+
 int main(int argc, const char *argv[])
 {
 
     //testHashTable();
-    testHashTableInOut();
-
+    //testHashTableInOut();
+    computeMd5();
     return 0;
 }
