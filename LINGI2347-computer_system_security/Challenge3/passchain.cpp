@@ -34,8 +34,8 @@ unsigned int PassChain::computeFrom(unsigned int pass, int place)
     {
         md5i_iterate(p, 5, hash); 
         p = nextIterFromHash(hash,i);
-      //  print_hex(hash,16); 
-    //    cout << " : "<< p << endl;
+    //    print_hex(hash,16); 
+     //   cout << " : "<< p << endl;
     }
     end = p;
     //cout << endl;

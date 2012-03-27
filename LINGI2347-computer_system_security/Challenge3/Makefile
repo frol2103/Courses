@@ -1,6 +1,6 @@
 CC = g++
 all: $(EXEC)
-LDFLAGS = -lcrypto
+LDFLAGS = -lcrypto -lpthread
 CFLAGS = -g
 
 EXEC = precompute merge find

@@ -31,7 +31,7 @@ void Md5Table::insert(PassChain* pc)
 PassChain* Md5Table::getMatch(PassChain * ref)
 {
     int position  = hash(ref);
-if(table[position] != NULL)
+    if(table[position] != NULL)
         return table[position]->getMatch(ref);
     else
         return NULL;

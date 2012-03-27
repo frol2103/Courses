@@ -3,7 +3,16 @@
 #include <stdio.h>
 #include "md5table.h"
 #include "util.h"
+#define NB_THREAD 8
 using namespace std;
+
+typedef struct{
+    int start;
+    int end;
+    unsigned char **hashes;
+    int* pass;
+    Md5Table* mt;
+}find_pass_args;
 int hashesFromFile(string filename, unsigned char*** hashes)
 {
     string line;
@@ -39,6 +48,9 @@ int hashesFromFile(string filename, unsigned char*** hashes)
 
 unsigned int findPass(unsigned char* hash, Md5Table* table)
 {
+    cout << "looking for ";
+    print_hex(hash,16);
+    cout << endl;
     int chainsize = CHAIN_LENGTH;
     unsigned int p;
     PassChain pc = PassChain();
@@ -62,6 +74,20 @@ unsigned int findPass(unsigned char* hash, Md5Table* table)
     }    
     return -1;
 }
+void * thread_find_pass(void * p_data)
+{
+    int i;
+    find_pass_args* data = (find_pass_args*)p_data;
+
+    for(i=data->start;i<=data->end; i++)
+    {
+        cout << i << endl;
+        unsigned int p = findPass(data->hashes[i],data->mt);
+        data->pass[i] = p;
+
+    }
+
+}
 
 int main(int argc, const char *argv[])
 {
@@ -70,19 +96,43 @@ int main(int argc, const char *argv[])
     nbhashes = hashesFromFile(argv[1], &hashes);
     Md5Table mt = Md5Table();
     mt.fromFile(argv[2]);
-    for(i=0;i<nbhashes; i++)
+    int pass[nbhashes];
+    pthread_t threads[NB_THREAD];
+    int j=0;
+    for(i=0; i<NB_THREAD; i++)
     {
-//        cout << "try to find ";
-//        print_hex(hashes[i],16);
-//        cout << endl;
-        unsigned int p = findPass(hashes[i],&mt);
-        print_hex(hashes[i],16);
-        if(p!= -1)
-            cout << " : " << p<<endl;
-        else
-            cout << " : not found" << endl;
+        find_pass_args *p_data = new find_pass_args;
+        p_data->start = j;
+        j += (nbhashes/NB_THREAD);
+        if (i < nbhashes % NB_THREAD)
+            j+=1;
 
+        p_data->end = j-1;
+        p_data->hashes = hashes;
+        p_data->pass = pass;
+        p_data->mt = &mt;
+        cout << "thread " << i << " from: " << p_data->start << " to:" << p_data->end << endl;
+        pthread_create(&(threads[i]), NULL, thread_find_pass,(void *) p_data);
+        
     }
+
+    for(i=0; i<NB_THREAD; i++)
+    {
+        pthread_join(threads[i],NULL);
+    }
+
+    cout << "Value in B                       | Solution " << endl << "---------------------------------+-----------" << endl;
+    for(i = 0; i < nbhashes; i++)
+    {
+        print_hex(hashes[i],16);
+        unsigned p = pass[i];
+        if(p!= -1)
+            cout << " | " << hex << p << endl;
+        else
+            cout << " | " << endl;
+    
+    }
+
     return 0;
 }
 
