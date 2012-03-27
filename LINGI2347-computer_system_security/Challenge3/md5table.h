@@ -1,7 +1,7 @@
 #ifndef MD5TABLE
 
 #define MD5TABLE
-#define DEFAULT_SIZE 50000000
+#define DEFAULT_SIZE 500000
 
 #include "passchain.h"
 #include "md5chainedlist.h"

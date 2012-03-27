@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "md5table.h"
 #include "util.h"
-#define NB_THREAD 8
+#define NB_THREAD 2
 using namespace std;
 
 typedef struct{
@@ -48,9 +48,6 @@ int hashesFromFile(string filename, unsigned char*** hashes)
 
 unsigned int findPass(unsigned char* hash, Md5Table* table)
 {
-    cout << "looking for ";
-    print_hex(hash,16);
-    cout << endl;
     int chainsize = CHAIN_LENGTH;
     unsigned int p;
     PassChain pc = PassChain();
@@ -81,7 +78,6 @@ void * thread_find_pass(void * p_data)
 
     for(i=data->start;i<=data->end; i++)
     {
-        cout << i << endl;
         unsigned int p = findPass(data->hashes[i],data->mt);
         data->pass[i] = p;
 
@@ -111,7 +107,6 @@ int main(int argc, const char *argv[])
         p_data->hashes = hashes;
         p_data->pass = pass;
         p_data->mt = &mt;
-        cout << "thread " << i << " from: " << p_data->start << " to:" << p_data->end << endl;
         pthread_create(&(threads[i]), NULL, thread_find_pass,(void *) p_data);
         
     }
